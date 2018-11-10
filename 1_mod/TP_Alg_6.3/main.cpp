@@ -20,8 +20,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
+#include <random>
+#include <cassert>
+#include <ctime>
 
-int partition(int *Array, int leftElem, int rightElem){
+template <class T, class Compare>
+T partition(T *Array, int leftElem, int rightElem, Compare func){
     int pivot = rand() % (rightElem - leftElem) + leftElem;
     std::swap(Array[pivot], Array[rightElem - 1]);
 
@@ -29,7 +33,8 @@ int partition(int *Array, int leftElem, int rightElem){
     int j = rightElem - 1;
 
     while (j >= 0) {
-        if (Array[rightElem - 1] < Array[j]){
+        //Array[rightElem - 1] < Array[j])
+        if (func(Array[rightElem - 1], Array[j])){
             std::swap(Array[i], Array[j]);
             i--;
         }
@@ -42,16 +47,17 @@ int partition(int *Array, int leftElem, int rightElem){
     return i;
 }
 
-int kStat(int *Array, int leftElem, int rightElem, int kStatistic) {
-    int pivot = partition(Array, leftElem, rightElem);
+template <class T, class Compare>
+T kStat(T *Array, int leftElem, int rightElem, int kStatistic, Compare func) {
+    int pivot = partition(Array, leftElem, rightElem, func);
     while (pivot != kStatistic) {
         if (pivot < kStatistic) {
             leftElem = pivot;
-            pivot = partition(Array, leftElem, rightElem);
+            pivot = partition(Array, leftElem, rightElem, func);
         }
         else if (pivot > kStatistic) {
             rightElem = pivot;
-            pivot = partition(Array, leftElem, rightElem);
+            pivot = partition(Array, leftElem, rightElem, func);
         }
     }
     return Array[pivot];
@@ -64,7 +70,7 @@ int main() {
     int *Array = new int[sizeOfArray];
     for (int i = 0; i < sizeOfArray; i++)
         std::cin >> Array[i];
-    int result = kStat(Array, 0, sizeOfArray, kStatistic);
+    int result = kStat(Array, 0, sizeOfArray, kStatistic, [](const int &first, const int &second) {return first < second;});
     std::cout << result;
     delete [] Array;
     return 0;

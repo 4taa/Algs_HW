@@ -25,40 +25,6 @@ private:
     int size;
     int capacity;
 
-public:
-    Heap(int *array, int size): size(size), capacity(size){
-        Array = new int [capacity];
-        std::copy(array, array + capacity, Array);
-    }
-
-    ~Heap(){
-        delete [] Array;
-    }
-
-    int sizeOfHeap(){
-        return size;
-    }
-
-    Heap buildHeap(int *Array, int size) {
-        Heap heap(Array, size);
-        for (int i = heap.sizeOfHeap() / 2; i >= 0; --i)
-            heap.siftDown(i);
-        return heap;
-    }
-
-    int popMin(){
-        int min = Array[0];
-        Array[0] = Array[--size];
-        siftDown(0);
-        return min;
-    }
-
-    void addElem(int elemToAdd){
-        size++;
-        Array[size - 1] = elemToAdd;
-        siftUp(size - 1);
-    }
-
     int parentIndex(int ind){
         return (ind - 1) / 2;
     }
@@ -88,6 +54,46 @@ public:
             swap(Array[ind], Array[last]);
             ind = last;
         }
+    }
+
+public:
+
+    Heap(int *array, int size): size(size), capacity(size){
+        Array = new int [capacity];
+        std::copy(array, array + capacity, Array);
+    }
+
+    Heap(const Heap&) = default;
+    Heap(Heap&&) = default;
+    Heap& operator=(const Heap&) = default;
+    Heap& operator=(Heap&&) = default;
+
+    ~Heap(){
+        delete [] Array;
+    }
+
+    Heap buildHeap(int *Array, int size) {
+        Heap heap(Array, size);
+        for (int i = heap.sizeOfHeap() / 2; i >= 0; --i)
+            heap.siftDown(i);
+        return heap;
+    }
+
+    int sizeOfHeap(){
+        return size;
+    }
+
+    int popMin(){
+        int min = Array[0];
+        Array[0] = Array[--size];
+        siftDown(0);
+        return min;
+    }
+
+    void addElem(int elemToAdd){
+        size++;
+        Array[size - 1] = elemToAdd;
+        siftUp(size - 1);
     }
 };
 
