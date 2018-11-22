@@ -25,7 +25,7 @@
 #include <ctime>
 
 template <class T, class Compare>
-T partition(T *Array, int leftElem, int rightElem, Compare func){
+T partition(T *Array, int leftElem, int rightElem, Compare func) {
     int pivot = rand() % (rightElem - leftElem) + leftElem;
     std::swap(Array[pivot], Array[rightElem - 1]);
 
@@ -34,7 +34,7 @@ T partition(T *Array, int leftElem, int rightElem, Compare func){
 
     while (j >= 0) {
         //Array[rightElem - 1] < Array[j])
-        if (func(Array[rightElem - 1], Array[j])){
+        if (func(Array[rightElem - 1], Array[j])) {
             std::swap(Array[i], Array[j]);
             i--;
         }

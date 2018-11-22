@@ -6,11 +6,11 @@
 
 //TODO: getkey - функтор шаблонный (return byte[i]) диапозон ключей неизвестен, шаблонищация
 
-struct LSD{
+struct LSD {
     unsigned char byte[8];
 };
 
-void countSort(LSD *Array, unsigned int size){
+void countSort(LSD *Array, unsigned int size) {
     for (int i = 0; i < 8; i++){
         int C[256];
         for (int k = 0; k < 256; k++)
@@ -27,7 +27,7 @@ void countSort(LSD *Array, unsigned int size){
     }
 };
 
-void sortLSD(long long *&Array, unsigned int size){
+void sortLSD(long long *&Array, unsigned int size) {
     LSD *tempArray = (LSD *)Array;
     countSort(tempArray, size);
     Array = (long long *)tempArray;

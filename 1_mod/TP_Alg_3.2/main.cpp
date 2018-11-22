@@ -25,18 +25,23 @@ class Deck{
 
 public:
     Deck (int capacity):
-    capacity(capacity), head (0), tail (0){
+    capacity(capacity), head (0), tail (0) {
         Array = new int [capacity];
     }
 
-    void pushTail(int valToAdd){
+    Deck(const Deck&) = delete;
+    Deck(Deck&&) = delete;
+    Deck& operator=(const Deck&) = delete;
+    Deck& operator=(Deck&&) = delete;
+
+    void pushTail(int valToAdd) {
         Array[tail] = valToAdd;
         tail = (tail + 1) % capacity;
         if (tail == head)
             incCapacity();
     }
 
-    void pushHead(int valToAdd){
+    void pushHead(int valToAdd) {
         if (head == 0)
             head = capacity - 1;
         else
@@ -46,7 +51,7 @@ public:
             incCapacity();
     }
 
-    int popHead(){
+    int popHead() {
         if (head == tail)
             return -1;
         else {
@@ -56,7 +61,7 @@ public:
         }
     }
 
-    int popTail(){
+    int popTail() {
         if (head == tail)
             return -1;
         else {
@@ -69,7 +74,7 @@ public:
         }
     }
 
-    ~Deck(){
+    ~Deck() {
         delete[] Array;
     }
 
@@ -80,7 +85,7 @@ private:
     int tail;
     int capacity;
 
-    void incCapacity(){
+    void incCapacity() {
         int *newArray = new int [capacity * 2];
         for (int i = 0; i < capacity; i++)
             newArray[i] = Array[(head + i) % capacity];
@@ -92,27 +97,27 @@ private:
     }
 };
 
-int main(){
+int main() {
     Deck deck(2);
     int n = 0, func_num = 0, func_value = 0;
     std::cin >> n;
     assert(n <= 1000000);
-    for (int i = 0; i < n; i ++){
+    for (int i = 0; i < n; i ++) {
         std::cin >> func_num >> func_value;
-        if (func_num == 1){
+        if (func_num == 1) {
             deck.pushHead(func_value);
         }
-        if (func_num == 3){
+        if (func_num == 3) {
             deck.pushTail(func_value);
         }
-        if (func_num == 2){
-            if(deck.popHead() != func_value){
+        if (func_num == 2) {
+            if(deck.popHead() != func_value) {
                 std::cout << "NO";
                 return 0;
             }
         }
-        if (func_num == 4){
-            if(deck.popTail() != func_value){
+        if (func_num == 4) {
+            if(deck.popTail() != func_value) {
                 std::cout << "NO";
                 return 0;
             }

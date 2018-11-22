@@ -8,6 +8,7 @@ N, k ≤ 10000.*/
 #include <iostream>
 #include <cassert>
 
+//TODO: правило пяти
 
 class Node {
 public:
@@ -17,7 +18,12 @@ public:
 
     Node(): value (0), next(nullptr) {}
 
-    Node * addElem(int valToAdd, Node *current){
+    Node(const Node&) = delete;
+    Node(Node&&) = delete;
+    Node& operator=(const Node&) = delete;
+    Node& operator=(Node&&) = delete;
+
+    Node * addElem(int valToAdd, Node *current) {
         Node *newNode = new Node();
         newNode->value = valToAdd;
         if (head == nullptr){
@@ -30,7 +36,7 @@ public:
         return newNode;
     }
 
-    void deleteElem(Node *valToDel){
+    void deleteElem(Node *valToDel) {
         Node *node = valToDel->next;
         if (valToDel == node)
             head = nullptr;
@@ -44,11 +50,11 @@ public:
         return;
     }
 
-    Node * getHead (){
+    Node * getHead () {
         return head;
     }
 
-    Node * getNext(Node *node){
+    Node * getNext(Node *node) {
         if (node == nullptr)
             return head;
         return node->next;
@@ -60,17 +66,17 @@ public:
     }
 };
 
-int Counter(int TotalVals, int delInd){
+int Counter(int TotalVals, int delInd) {
     Node node;
     assert (TotalVals > 0);
     assert (delInd > 0);
     Node *curr = node.getHead();
-    for (int i = 1; i <= TotalVals; i++){
+    for (int i = 1; i <= TotalVals; i++) {
         curr = node.addElem(i, curr);
     }
     curr = nullptr;
     do{
-        for (int i = 0; i < delInd; i++){
+        for (int i = 0; i < delInd; i++) {
             curr = node.getNext(curr);
             if (i == delInd - 1)
                 node.deleteElem(curr);

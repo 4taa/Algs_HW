@@ -19,19 +19,19 @@ void swap (int &a, int &b) {
     b = temp;
 }
 
-class Heap{
+class Heap {
 private:
     int *Array;
     int size;
     int capacity;
 
-    int parentIndex(int ind){
+    int parentIndex(int ind) {
         return (ind - 1) / 2;
     }
 
-    void siftUp(int ind){
+    void siftUp(int ind) {
         int par = 0;
-        while (ind > 0){
+        while (ind > 0) {
             par = parentIndex(ind);
             if (Array[ind] >= Array[par])
                 return;
@@ -40,10 +40,10 @@ private:
         }
     }
 
-    void siftDown(int ind){
+    void siftDown(int ind) {
         int first = 0;
         int second = 0;
-        while (2 * ind + 1 < size){
+        while (2 * ind + 1 < size) {
             first = 2 * ind + 1;
             second = 2 * ind + 2;
             int last = first;
@@ -58,7 +58,7 @@ private:
 
 public:
 
-    Heap(int *array, int size): size(size), capacity(size){
+    Heap(int *array, int size): size(size), capacity(size) {
         Array = new int [capacity];
         std::copy(array, array + capacity, Array);
     }
@@ -68,7 +68,7 @@ public:
     Heap& operator=(const Heap&) = default;
     Heap& operator=(Heap&&) = default;
 
-    ~Heap(){
+    ~Heap() {
         delete [] Array;
     }
 
@@ -79,28 +79,28 @@ public:
         return heap;
     }
 
-    int sizeOfHeap(){
+    int sizeOfHeap() {
         return size;
     }
 
-    int popMin(){
+    int popMin() {
         int min = Array[0];
         Array[0] = Array[--size];
         siftDown(0);
         return min;
     }
 
-    void addElem(int elemToAdd){
+    void addElem(int elemToAdd) {
         size++;
         Array[size - 1] = elemToAdd;
         siftUp(size - 1);
     }
 };
 
-int counter(Heap heap){
+int counter(Heap heap) {
     int result = 0;
     int temp = 0;
-    while (heap.sizeOfHeap() > 1){
+    while (heap.sizeOfHeap() > 1) {
         temp = heap.popMin();
         temp = temp + heap.popMin();
         result = result + temp;
