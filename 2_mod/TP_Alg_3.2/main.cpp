@@ -133,7 +133,7 @@ public:
     };
 };
 
-class decTree {
+class decTree{
 private:
     Node* root;
 
@@ -181,7 +181,7 @@ private:
     };
 
 public:
-    decTree() : root(nullptr) {}
+    explicit decTree() : root(nullptr) {}
 
     decTree(const decTree&) = delete;
     decTree(decTree&&) = delete;
@@ -237,7 +237,7 @@ public:
         Nodes.push(root);
 
         while (Nodes.size() > 0) {
-            if ((currentWidth = static_cast<int>(Nodes.size())) > maxWidth)
+            if ((currentWidth = Nodes.size()) > maxWidth)
                 maxWidth = currentWidth;
 
             for (int i = 0; i < currentWidth; i++) {
@@ -251,7 +251,6 @@ public:
         }
         return maxWidth;
     };
-
 };
 
 int main(){
@@ -274,3 +273,28 @@ int main(){
 
     return 0;
 }
+
+//
+//    int getWidth() {
+//        int maxWidth = 0;
+//        int currentWidth = 0;
+//
+//        std::queue<Node*> Nodes;
+//        Node* currentNode = nullptr;
+//        Nodes.push(root);
+//
+//        while (Nodes.size() > 0) {
+//            if ((currentWidth = static_cast<int>(Nodes.size())) > maxWidth)
+//                maxWidth = currentWidth;
+//
+//            for (int i = 0; i < currentWidth; i++) {
+//                currentNode = Nodes.front();
+//                if (currentNode->leftChild != nullptr)
+//                    Nodes.push(currentNode->leftChild);
+//                if (currentNode->rightChild != nullptr)
+//                    Nodes.push(currentNode->rightChild);
+//                Nodes.pop();
+//            }
+//        }
+//        return maxWidth;
+//    };
