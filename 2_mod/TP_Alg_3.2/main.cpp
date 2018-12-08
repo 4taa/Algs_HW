@@ -27,6 +27,31 @@ struct Node {
     Node(int value, int priority = 0) : value(value), priority(priority), leftChild(nullptr), rightChild(nullptr) {};
 };
 
+template <class T>
+int getWidth(T node) {
+    int maxWidth = 0;
+    int currentWidth = 0;
+
+    std::queue<Node*> Nodes;
+    Node* currentNode = nullptr;
+    Nodes.push(node);
+
+    while (Nodes.size() > 0) {
+        if ((currentWidth = static_cast<int>(Nodes.size())) > maxWidth)
+            maxWidth = currentWidth;
+
+        for (int i = 0; i < currentWidth; i++) {
+            currentNode = Nodes.front();
+            if (currentNode->leftChild != nullptr)
+                Nodes.push(currentNode->leftChild);
+            if (currentNode->rightChild != nullptr)
+                Nodes.push(currentNode->rightChild);
+            Nodes.pop();
+        }
+    }
+    return maxWidth;
+};
+
 class binaryTree {
 private:
     Node* root;
@@ -108,27 +133,9 @@ public:
         }
     };
 
-    int getWidth() {
+    int getWidthBinary() {
         int maxWidth = 0;
-        int currentWidth = 0;
-
-        std::queue<Node*> Nodes;
-        Node* currentNode = nullptr;
-        Nodes.push(root);
-
-        while (Nodes.size() > 0) {
-            if ((currentWidth = Nodes.size()) > maxWidth)
-                maxWidth = currentWidth;
-
-            for (int i = 0; i < currentWidth; i++) {
-                currentNode = Nodes.front();
-                if (currentNode->leftChild != nullptr)
-                    Nodes.push(currentNode->leftChild);
-                if (currentNode->rightChild != nullptr)
-                    Nodes.push(currentNode->rightChild);
-                Nodes.pop();
-            }
-        }
+        maxWidth = getWidth(root);
         return maxWidth;
     };
 };
@@ -228,27 +235,9 @@ public:
             prevNode->rightChild = newNode;
     };
 
-    int getWidth() {
+    int getWidthDec() {
         int maxWidth = 0;
-        int currentWidth = 0;
-
-        std::queue<Node*> Nodes;
-        Node* currentNode = nullptr;
-        Nodes.push(root);
-
-        while (Nodes.size() > 0) {
-            if ((currentWidth = Nodes.size()) > maxWidth)
-                maxWidth = currentWidth;
-
-            for (int i = 0; i < currentWidth; i++) {
-                currentNode = Nodes.front();
-                if (currentNode->leftChild != nullptr)
-                    Nodes.push(currentNode->leftChild);
-                if (currentNode->rightChild != nullptr)
-                    Nodes.push(currentNode->rightChild);
-                Nodes.pop();
-            }
-        }
+        maxWidth = getWidth(root);
         return maxWidth;
     };
 };
@@ -268,33 +257,8 @@ int main(){
         dec.insert(value, priority);
     }
 
-    result = dec.getWidth() - binary.getWidth();
+    result = dec.getWidthDec() - binary.getWidthBinary();
     std::cout << result;
 
     return 0;
 }
-
-//
-//    int getWidth() {
-//        int maxWidth = 0;
-//        int currentWidth = 0;
-//
-//        std::queue<Node*> Nodes;
-//        Node* currentNode = nullptr;
-//        Nodes.push(root);
-//
-//        while (Nodes.size() > 0) {
-//            if ((currentWidth = static_cast<int>(Nodes.size())) > maxWidth)
-//                maxWidth = currentWidth;
-//
-//            for (int i = 0; i < currentWidth; i++) {
-//                currentNode = Nodes.front();
-//                if (currentNode->leftChild != nullptr)
-//                    Nodes.push(currentNode->leftChild);
-//                if (currentNode->rightChild != nullptr)
-//                    Nodes.push(currentNode->rightChild);
-//                Nodes.pop();
-//            }
-//        }
-//        return maxWidth;
-//    };

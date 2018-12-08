@@ -3,4 +3,4 @@ project(1_mod)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(1_mod ../../3_mod/sem_01_12_18/seminar.cpp)
+add_executable(1_mod /Users/pavelpupchin/Desktop/Algs/Algs_HW/1_mod/2_mod/TP_Alg_3.2/main.cpp Huffman.h)
